@@ -56,4 +56,4 @@ Some backend features require environment variables such as `DATABASE_URL`, `SES
 
 ## Notes
 
-This repository contains the cleaned project source code. Generated build artifacts, local cache files, and private environment variables are intentionally excluded.
+This repository contains the project source code. Generated build artifacts, local cache files, and private environment variables are intentionally excluded.
