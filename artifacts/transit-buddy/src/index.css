@@ -1,0 +1,260 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+@import "tw-animate-css";
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-card-border: hsl(var(--card-border));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-popover-border: hsl(var(--popover-border));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-primary-border: var(--primary-border);
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-secondary-border: var(--secondary-border);
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-muted-border: var(--muted-border);
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-accent-border: var(--accent-border);
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-destructive-border: var(--destructive-border);
+
+  --font-sans: 'Nunito', sans-serif;
+  --font-serif: Georgia, serif;
+  --font-mono: Menlo, monospace;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+}
+
+:root {
+  --button-outline: rgba(0,0,0, .10);
+  --badge-outline: rgba(0,0,0, .05);
+  --opaque-button-border-intensity: -8;
+  --elevate-1: rgba(0,0,0, .03);
+  --elevate-2: rgba(0,0,0, .08);
+
+  /* TransitBuddy logo palette — soft blue + lavender + sage + pink on warm cream */
+  --background: 43 56% 96%;        /* Warm cream (logo background) */
+  --foreground: 214 22% 26%;       /* Soft navy (logo line details) */
+
+  --border: 215 25% 88%;
+  --input: 215 25% 88%;
+  --ring: 213 58% 47%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 214 22% 26%;
+  --card-border: 215 25% 90%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 214 22% 26%;
+  --popover-border: 215 25% 90%;
+
+  --primary: 213 58% 47%;          /* Periwinkle blue ("Transit"), AA-contrast for white text */
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 262 44% 85%;        /* Soft lavender (purple train) */
+  --secondary-foreground: 262 32% 32%;
+
+  --muted: 215 28% 93%;
+  --muted-foreground: 215 14% 46%;
+
+  --accent: 348 75% 91%;           /* Soft pink (heart / "Buddy") */
+  --accent-foreground: 348 45% 38%;
+
+  --destructive: 0 72% 58%;
+  --destructive-foreground: 0 0% 100%;
+
+  --radius: 1rem;
+}
+
+.dark {
+  --button-outline: rgba(255,255,255, .10);
+  --badge-outline: rgba(255,255,255, .05);
+  --opaque-button-border-intensity: 9;
+  --elevate-1: rgba(255,255,255, .04);
+  --elevate-2: rgba(255,255,255, .09);
+
+  --background: 222 24% 13%;
+  --foreground: 210 30% 92%;
+
+  --border: 220 18% 24%;
+  --input: 220 18% 24%;
+  --ring: 213 56% 52%;
+
+  --card: 222 24% 17%;
+  --card-foreground: 210 30% 92%;
+  --card-border: 220 18% 26%;
+
+  --popover: 222 24% 17%;
+  --popover-foreground: 210 30% 92%;
+  --popover-border: 220 18% 26%;
+
+  --primary: 213 56% 52%;
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 262 26% 34%;
+  --secondary-foreground: 262 30% 90%;
+
+  --muted: 222 18% 22%;
+  --muted-foreground: 210 15% 62%;
+
+  --accent: 348 30% 32%;
+  --accent-foreground: 348 60% 88%;
+
+  --destructive: 0 55% 45%;
+  --destructive-foreground: 0 0% 100%;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply font-sans antialiased bg-background text-foreground transition-colors duration-300;
+  }
+}
+
+/* Keep the Leaflet map's internal high z-index panes/controls from rendering
+   on top of modals/dialogs by isolating its stacking context. */
+.leaflet-container {
+  isolation: isolate;
+  z-index: 0;
+}
+
+/* Card flip for matching game */
+.card-flip {
+  perspective: 800px;
+}
+.card-flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.4s ease;
+}
+.card-flip-inner.flipped {
+  transform: rotateY(180deg);
+}
+.card-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card-back {
+  transform: rotateY(180deg);
+}
+
+@layer utilities {
+  input[type="search"]::-webkit-search-cancel-button {
+    @apply hidden;
+  }
+
+  [contenteditable][data-placeholder]:empty::before {
+    content: attr(data-placeholder);
+    color: hsl(var(--muted-foreground));
+    pointer-events: none;
+  }
+
+  .no-default-hover-elevate {}
+  .no-default-active-elevate {}
+
+  .toggle-elevate::before,
+  .toggle-elevate-2::before {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset: 0px;
+    border-radius: inherit;
+    z-index: -1;
+  }
+
+  .toggle-elevate.toggle-elevated::before {
+    background-color: var(--elevate-2);
+  }
+
+  .border.toggle-elevate::before {
+    inset: -1px;
+  }
+
+  .hover-elevate:not(.no-default-hover-elevate),
+  .active-elevate:not(.no-default-active-elevate),
+  .hover-elevate-2:not(.no-default-hover-elevate),
+  .active-elevate-2:not(.no-default-active-elevate) {
+    position: relative;
+    z-index: 0;
+  }
+
+  .hover-elevate:not(.no-default-hover-elevate)::after,
+  .active-elevate:not(.no-default-active-elevate)::after,
+  .hover-elevate-2:not(.no-default-hover-elevate)::after,
+  .active-elevate-2:not(.no-default-active-elevate)::after {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset: 0px;
+    border-radius: inherit;
+    z-index: 999;
+  }
+
+  .hover-elevate:hover:not(.no-default-hover-elevate)::after,
+  .active-elevate:active:not(.no-default-active-elevate)::after {
+    background-color: var(--elevate-1);
+  }
+
+  .hover-elevate-2:hover:not(.no-default-hover-elevate)::after,
+  .active-elevate-2:active:not(.no-default-active-elevate)::after {
+    background-color: var(--elevate-2);
+  }
+
+  .border.hover-elevate:not(.no-hover-interaction-elevate)::after,
+  .border.active-elevate:not(.no-active-interaction-elevate)::after,
+  .border.hover-elevate-2:not(.no-hover-interaction-elevate)::after,
+  .border.active-elevate-2:not(.no-active-interaction-elevate)::after,
+  .border.hover-elevate:not(.no-hover-interaction-elevate)::after {
+    inset: -1px;
+  }
+}
+
+/* Larger, friendlier labels on the GPS map */
+.transitbuddy-map .leaflet-tooltip {
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+}
+.transitbuddy-map .leaflet-control-attribution {
+  font-size: 0.7rem;
+}
